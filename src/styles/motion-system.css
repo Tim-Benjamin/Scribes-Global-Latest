@@ -1,0 +1,28 @@
+.motion-app {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+.motion-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.motion-scene-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 75% 40%, #e8ddf0 0%, transparent 60%),
+    #f6f6f6;
+}
+.motion-app-content { position: relative; z-index: 1; }
+.motion-route { min-height: 65svh; display: flow-root; }
+.motion-route:focus { outline: none; }
+.motion-route[inert] { pointer-events: none; }
+/* Existing page backgrounds stay intact. Step 2 can expose the scene in
+   selected sections; for now it is visible behind page transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+}

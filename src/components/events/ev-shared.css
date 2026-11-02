@@ -1,0 +1,40 @@
+/* Shared by /events and /events/:slug */
+
+/* Shared status chip (also used on event detail) */
+.ev-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: var(--step--1);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ev-status::before {
+  content: "";
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex: none;
+}
+
+.ev-status--ongoing::before {
+  background: var(--magenta);
+  box-shadow: 0 0 0 0 rgba(197, 56, 191, 0.6);
+  animation: ev-live 1.6s infinite;
+}
+
+.ev-status--past::before {
+  background: var(--fg-faint);
+}
+
+.ev-status--cancelled::before {
+  background: #e0457b;
+}
+
+@keyframes ev-live {
+  70% { box-shadow: 0 0 0 0.6em rgba(197, 56, 191, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(197, 56, 191, 0); }
+}
+

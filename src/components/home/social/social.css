@@ -1,0 +1,443 @@
+.social-stats,
+.social-feed,
+.youtube-showcase {
+  position: relative;
+  padding:
+    clamp(5rem, 10vw, 10rem)
+    clamp(1.15rem, 4vw, 4.5rem);
+}
+
+.social-stats {
+  background: #f6f6f6;
+  color: #161119;
+}
+
+.social-stats__container,
+.social-feed__container,
+.youtube-showcase__container {
+  width: min(100%, 94rem);
+  margin-inline: auto;
+}
+
+.social-stats__intro,
+.social-feed__header,
+.youtube-showcase__header {
+  margin-bottom:
+    clamp(2.5rem, 5vw, 5rem);
+}
+
+.social-stats__intro > p,
+.social-feed__header p,
+.youtube-showcase__header > p {
+  margin: 0 0 1rem;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: #4e0d85;
+}
+
+.social-stats__intro h2,
+.social-feed__header h2,
+.youtube-showcase__header h2 {
+  margin: 0;
+
+  font-size:
+    clamp(3rem, 7vw, 7rem);
+
+  line-height: 0.9;
+
+  letter-spacing: -0.06em;
+}
+
+.social-stats__intro h2 span,
+.social-feed__header h2 span,
+.youtube-showcase__header h2 span {
+  display: block;
+  color: #4e0d85;
+}
+
+/* SOCIAL STATS */
+
+.social-stats__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(12rem, 1fr)
+    );
+
+  border-top:
+    1px solid
+    rgba(22, 17, 25, 0.12);
+}
+
+.social-stats__item {
+  min-height: 15rem;
+
+  padding: 2rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  border-right:
+    1px solid
+    rgba(22, 17, 25, 0.12);
+
+  border-bottom:
+    1px solid
+    rgba(22, 17, 25, 0.12);
+}
+
+.social-stats__item strong {
+  font-size:
+    clamp(3rem, 6vw, 6rem);
+
+  line-height: 0.9;
+
+  letter-spacing: -0.07em;
+
+  color: #4e0d85;
+}
+
+.social-stats__item span {
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+/* SOCIAL FEEDS */
+
+.social-feed {
+  background: #ffffff;
+  color: #161119;
+}
+
+.social-feed--tiktok {
+  background: #161119;
+  color: #f6f6f6;
+}
+
+.social-feed--tiktok
+.social-feed__header p {
+  color: #1ebcf9;
+}
+
+.social-feed--tiktok
+.social-feed__header h2 span {
+  color: #c538bf;
+}
+
+.social-feed__grid {
+  display: grid;
+  gap: 1px;
+
+  background:
+    rgba(22, 17, 25, 0.12);
+
+  border:
+    1px solid
+    rgba(22, 17, 25, 0.12);
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+}
+
+.social-feed--tiktok
+.social-feed__grid {
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  border-color:
+    rgba(255, 255, 255, 0.12);
+}
+
+.social-feed__card {
+  min-height: 20rem;
+
+  padding:
+    clamp(1.5rem, 3vw, 3rem);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  background: #ffffff;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.social-feed--tiktok
+.social-feed__card {
+  background: #161119;
+}
+
+.social-feed__number {
+  font-size: 0.7rem;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.45;
+}
+
+.social-feed__card-body span {
+  display: block;
+
+  margin-bottom: 0.7rem;
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color: #4e0d85;
+}
+
+.social-feed--tiktok
+.social-feed__card-body span {
+  color: #1ebcf9;
+}
+
+.social-feed__card-body p {
+  margin: 0;
+
+  max-width: 22ch;
+
+  font-size:
+    clamp(1.3rem, 2.2vw, 2.2rem);
+
+  line-height: 1.05;
+
+  letter-spacing: -0.04em;
+}
+
+.social-feed__arrow {
+  align-self: flex-end;
+
+  width: 2.8rem;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(22, 17, 25, 0.15);
+
+  transition:
+    transform 300ms ease,
+    background 300ms ease,
+    color 300ms ease;
+}
+
+.social-feed--tiktok
+.social-feed__arrow {
+  border-color:
+    rgba(255, 255, 255, 0.18);
+}
+
+.social-feed__card:hover
+.social-feed__arrow {
+  transform: rotate(45deg);
+
+  background: #4e0d85;
+  color: white;
+}
+
+.social-feed__loading {
+  padding: 2rem;
+
+  border:
+    1px solid
+    rgba(22, 17, 25, 0.1);
+}
+
+/* YOUTUBE */
+
+.youtube-showcase {
+  background: #f6f6f6;
+  color: #161119;
+}
+
+.youtube-showcase__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap:
+    clamp(1rem, 2vw, 2rem);
+}
+
+.youtube-showcase__card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.youtube-showcase__media {
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 16 / 10;
+
+  border-radius:
+    clamp(1rem, 1.5vw, 1.5rem);
+
+  background: #201924;
+}
+
+.youtube-showcase__media img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 700ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.youtube-showcase__card:hover img {
+  transform: scale(1.04);
+}
+
+.youtube-showcase__overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0, 0, 0, 0.58)
+    );
+}
+
+.youtube-showcase__play {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  width: 4rem;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  color: #4e0d85;
+}
+
+.youtube-showcase__duration {
+  position: absolute;
+
+  right: 1rem;
+  bottom: 1rem;
+
+  padding:
+    0.35rem 0.55rem;
+
+  border-radius: 0.3rem;
+
+  background:
+    rgba(0, 0, 0, 0.65);
+
+  color: white;
+
+  font-size: 0.65rem;
+}
+
+.youtube-showcase__body {
+  padding-top: 1.15rem;
+}
+
+.youtube-showcase__body h3 {
+  margin: 0;
+
+  font-size:
+    clamp(1.2rem, 1.8vw, 1.8rem);
+
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+}
+
+.youtube-showcase__meta {
+  display: flex;
+
+  gap: 1rem;
+
+  margin-top: 0.7rem;
+
+  color:
+    rgba(22, 17, 25, 0.5);
+
+  font-size: 0.68rem;
+}
+
+.youtube-showcase__placeholder {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(30, 188, 249, 0.25),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(197, 56, 191, 0.35),
+      transparent 35%
+    ),
+    #4e0d85;
+}
+
+@media (max-width: 900px) {
+  .social-feed__grid,
+  .youtube-showcase__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .social-feed__grid,
+  .youtube-showcase__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .social-feed__card {
+    min-height: 16rem;
+  }
+}

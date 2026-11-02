@@ -1,0 +1,394 @@
+/* =========================================================
+   CHAPTERS MAP — expanding window onto the Leaflet network
+   ========================================================= */
+
+.chm {
+  position: relative;
+  padding-top: clamp(4rem, 9vw, 8rem);
+}
+
+.chm-head {
+  display: grid;
+  gap: 1.2rem;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.chm-title {
+  max-width: 12ch;
+}
+
+.chm-stage {
+  position: relative;
+  height: 100svh;
+  min-height: 34rem;
+}
+
+.chm-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--night-2);
+  will-change: clip-path;
+}
+
+/* ---- the map itself ---- */
+.chm-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.chm .leaflet-container {
+  font-family: var(--font);
+  /* Shown before (or without) tiles: a quiet graticule, never grey. */
+  background:
+    radial-gradient(60% 55% at 35% 55%, rgba(78, 13, 133, 0.55), transparent 70%),
+    radial-gradient(40% 40% at 80% 25%, rgba(30, 188, 249, 0.16), transparent 70%),
+    linear-gradient(rgba(242, 240, 244, 0.06) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(90deg, rgba(242, 240, 244, 0.06) 1px, transparent 1px) 0 0 / 64px 64px,
+    var(--night);
+}
+
+/* Night-mode tiles with a violet cast so the map belongs to the brand. */
+.chm .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(200deg) saturate(0.55) brightness(0.82) contrast(1.05);
+}
+
+.chm-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(18, 6, 31, 0.55), transparent 22%, transparent 70%, rgba(18, 6, 31, 0.8)),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(18, 6, 31, 0.6));
+  mix-blend-mode: multiply;
+}
+
+.chm .leaflet-control-zoom {
+  margin: clamp(5.5rem, 12vh, 7rem) var(--gutter) 0 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.chm .leaflet-control-zoom a {
+  width: 2.6rem !important;
+  height: 2.6rem !important;
+  line-height: 2.6rem !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border: 0 !important;
+  font-weight: 500;
+}
+
+.chm .leaflet-control-zoom a:hover {
+  background: var(--magenta) !important;
+  color: #fff !important;
+}
+
+.chm .leaflet-control-attribution {
+  background: rgba(18, 6, 31, 0.7) !important;
+  color: rgba(242, 240, 244, 0.6) !important;
+  font-size: 0.65rem;
+  border-top-left-radius: var(--r-chip);
+}
+
+.chm .leaflet-control-attribution a {
+  color: var(--cyan) !important;
+}
+
+/* ---- pins ---- */
+.chm-marker {
+  background: none;
+  border: 0;
+}
+
+.chm-pin {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.chm-pin-dot {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--magenta);
+  box-shadow: 0 0 0 3px var(--paper), 0 6px 18px rgba(197, 56, 191, 0.6);
+  transition: transform 0.4s var(--ease-back);
+}
+
+.chm-marker.is-campus .chm-pin-dot {
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px var(--paper), 0 6px 18px rgba(30, 188, 249, 0.6);
+}
+
+.chm-pin-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--magenta);
+  animation: chm-pulse 2.4s var(--ease-out) infinite;
+}
+
+.chm-marker.is-campus .chm-pin-pulse {
+  border-color: var(--cyan);
+}
+
+@keyframes chm-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+.chm-pin-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 750;
+  white-space: nowrap;
+  transform: translate(-50%, 6px) scale(0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.45s var(--ease-back);
+}
+
+.chm-marker:hover .chm-pin-label,
+.chm-marker:focus-visible .chm-pin-label {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.chm-marker:hover .chm-pin-dot,
+.chm-marker:focus-visible .chm-pin-dot {
+  transform: scale(1.35);
+}
+
+.chm-marker:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+/* ---- popups ---- */
+.chm-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: var(--r-card);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+
+.chm-popup .leaflet-popup-content {
+  margin: 0;
+  font-family: var(--font);
+}
+
+.chm-popup .leaflet-popup-tip {
+  background: var(--paper);
+}
+
+.chm-popup a.leaflet-popup-close-button {
+  top: 0.55rem;
+  right: 0.55rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1.75rem;
+  color: var(--ink);
+}
+
+.chm-pop {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.chm-pop-loc {
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: rgba(22, 12, 34, 0.6);
+}
+
+.chm-pop-name {
+  font-size: 1.5rem;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  padding-right: 1.5rem;
+}
+
+.chm-popup .chm-pop-link {
+  justify-self: start;
+  margin-top: 0.6rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.chm-popup .chm-pop-link:hover {
+  background: var(--magenta);
+}
+
+/* ---- overlays ---- */
+.chm-card {
+  position: absolute;
+  z-index: 500;
+  left: var(--gutter);
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  display: grid;
+  gap: 0.35rem;
+  max-width: 22rem;
+  padding: 1.3rem 1.5rem;
+  border-radius: var(--r-card);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+}
+
+.chm-card-kicker {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--magenta);
+}
+
+.chm-card-count {
+  font-size: var(--step-2);
+  font-weight: 850;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.chm-card-link {
+  pointer-events: auto;
+  justify-self: start;
+  margin-top: 0.3rem;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.chm-chips {
+  position: absolute;
+  z-index: 500;
+  right: var(--gutter);
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  max-width: min(36rem, 50%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: rgba(18, 6, 31, 0.72);
+  border: 1px solid rgba(242, 240, 244, 0.22);
+  color: var(--paper);
+  font-size: var(--step--1);
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  transition: background 0.35s var(--ease-out), color 0.35s, transform 0.45s var(--ease-back);
+}
+
+.chm-chip:hover,
+.chm-chip:focus-visible,
+.chm-chip.is-on {
+  background: var(--paper);
+  color: var(--ink);
+  transform: translateY(-3px);
+}
+
+.chm-chip-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+
+.chm-chip.is-campus .chm-chip-dot {
+  background: var(--cyan);
+}
+
+@media (max-width: 899px) {
+  .chm-stage {
+    height: 78svh;
+    min-height: 30rem;
+    margin-inline: var(--gutter);
+  }
+
+  .chm-frame {
+    border-radius: 28px;
+  }
+
+  .chm-card {
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    max-width: none;
+    padding: 1rem 1.2rem;
+  }
+
+  .chm-chips {
+    left: 0.9rem;
+    right: auto;
+    top: 0.9rem;
+    bottom: auto;
+    max-width: calc(100% - 4.5rem);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .chm-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chm-chip {
+    flex: none;
+    padding: 0.5rem 0.85rem;
+  }
+
+  .chm .leaflet-control-zoom {
+    margin: 0.9rem 0.9rem 0 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chm-pin-pulse {
+    animation: none;
+    opacity: 0;
+  }
+
+  .chm-stage {
+    height: 80svh;
+    margin-inline: var(--gutter);
+  }
+
+  .chm-frame {
+    border-radius: var(--r-media);
+  }
+}

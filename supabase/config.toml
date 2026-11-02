@@ -1,0 +1,50 @@
+# Edge Function settings. `supabase link` handles the rest (project ref,
+# API keys, etc. come from your linked project / `supabase secrets`).
+#
+# verify_jwt = false on every function: these are public endpoints for
+# anonymous visitors, so there is no user JWT to verify at the gateway.
+# Each function does its own rate limiting, validation, optional
+# sign-in lookup (resolveUser — only used once member sign-in ships) and
+# RLS/trigger-backed writes instead.
+
+[functions.like-post]
+verify_jwt = false
+
+[functions.add-comment]
+verify_jwt = false
+
+[functions.pray-for-request]
+verify_jwt = false
+
+[functions.submit-prayer-request]
+verify_jwt = false
+
+[functions.chapter-join-request]
+verify_jwt = false
+
+[functions.volunteer-apply]
+verify_jwt = false
+
+[functions.event-register]
+verify_jwt = false
+
+[functions.event-rsvp]
+verify_jwt = false
+
+[functions.submit-invitation]
+verify_jwt = false
+
+[functions.newsletter-subscribe]
+verify_jwt = false
+
+[functions.confirm-subscription]
+verify_jwt = false
+
+[functions.newsletter-unsubscribe]
+verify_jwt = false
+
+[functions.media-submit]
+verify_jwt = false
+
+[functions.media-upload-notify]
+verify_jwt = false
